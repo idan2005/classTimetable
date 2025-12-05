@@ -22,7 +22,11 @@
     [scrollable]="true"
     scrollHeight="auto"
     responsiveLayout="scroll"
-    [tableStyle]="showTodayOnly ? { 'min-width': '0', width: '100%' } : { 'min-width': '940px' }"
+    [tableStyle]="
+      showTodayOnly
+        ? { 'min-width': '0', width: '100%' }
+        : { 'min-width': '940px' }
+    "
     [styleClass]="
       'timetable-table pony-timetable' + (showTodayOnly ? ' single-day' : '')
     "
@@ -58,6 +62,7 @@
               [ngStyle]="{
                 'background-color': c.color,
                 color: textColorFor(c.color),
+                'align-items': 'center',
               }"
               title="{{ c.teacher }}{{ c.room ? ' · ' + c.room : '' }}"
             >

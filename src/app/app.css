@@ -1,45 +1,48 @@
-
 /* My Little Pony Themed Utility Classes */
 .pony-card {
-	background: rgba(255,255,255,0.92);
-	border-radius: 20px;
-	box-shadow: 0 2px 16px 0 rgba(200, 150, 255, 0.13);
-	border: 2.5px solid var(--pony-blue);
-	padding: 1.5rem 2rem;
-	margin-bottom: 2rem;
-	position: relative;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 20px;
+  box-shadow: 0 2px 16px 0 rgba(200, 150, 255, 0.13);
+  border: 2.5px solid var(--pony-blue);
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  position: relative;
 }
 
 .pony-title {
-	font-family: 'Baloo', 'Comic Neue', cursive, sans-serif;
-	color: var(--pony-pink);
-	font-size: 2.5rem;
-	text-align: center;
-	text-shadow: 2px 2px 0 var(--pony-yellow), 0 2px 8px var(--pony-blue);
-	margin-bottom: 1.5rem;
+  font-family: "Baloo", "Comic Neue", cursive, sans-serif;
+  color: var(--pony-pink);
+  font-size: 2.5rem;
+  text-align: center;
+  text-shadow:
+    2px 2px 0 var(--pony-yellow),
+    0 2px 8px var(--pony-blue);
+  margin-bottom: 1.5rem;
 }
 
 .pony-label {
-	color: var(--pony-purple);
-	font-weight: bold;
-	font-size: 1.1em;
-	margin-bottom: 0.5em;
-	display: block;
+  color: var(--pony-purple);
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 0.5em;
+  display: block;
 }
 
-.pony-select, .pony-input {
-	border-radius: 12px;
-	border: 2px solid var(--pony-mint);
-	padding: 0.5em 1em;
-	font-size: 1em;
-	background: var(--pony-white);
-	color: #6d3a7b;
-	margin-bottom: 1em;
-	font-family: inherit;
+.pony-select,
+.pony-input {
+  border-radius: 12px;
+  border: 2px solid var(--pony-mint);
+  padding: 0.5em 1em;
+  font-size: 1em;
+  background: var(--pony-white);
+  color: #6d3a7b;
+  margin-bottom: 1em;
+  font-family: inherit;
 }
 
-.pony-select:focus, .pony-input:focus {
-	outline: none;
-	border-color: var(--pony-pink);
-	box-shadow: 0 0 0 2px var(--pony-yellow);
+.pony-select:focus,
+.pony-input:focus {
+  outline: none;
+  border-color: var(--pony-pink);
+  box-shadow: 0 0 0 2px var(--pony-yellow);
 }

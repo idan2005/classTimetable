@@ -1,70 +1,75 @@
-
-
-
 .pony-label {
-	margin-bottom: 0.7em;
-	color: var(--text-soft, #6b6c7e);
-	font-weight: 500;
-	font-size: 1.08em;
-	letter-spacing: 0.1px;
+  margin-bottom: 0.7em;
+  color: var(--text-soft, #6b6c7e);
+  font-weight: 500;
+  font-size: 1.08em;
+  letter-spacing: 0.1px;
 }
 
 /* Minimalist group selector buttons */
 .ui-selectbutton .ui-button {
-	min-width: 64px;
-	min-height: 40px;
-	margin-right: 0.5em;
-	margin-bottom: 0.5em;
-	background: transparent !important;
-	color: var(--primary, #23243a) !important;
-	border: none !important;
-	border-radius: 999px !important;
-	font-size: 1.08em;
-	font-weight: 500;
-	box-shadow: none;
-	padding: 0.5em 1.5em;
-	outline: none !important;
-	cursor: pointer;
-	transition: background 0.15s, color 0.15s, box-shadow 0.15s, border 0.15s, transform 0.1s;
+  min-width: 64px;
+  min-height: 40px;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+  background: transparent !important;
+  color: var(--primary, #23243a) !important;
+  border: none !important;
+  border-radius: 999px !important;
+  font-size: 1.08em;
+  font-weight: 500;
+  box-shadow: none;
+  padding: 0.5em 1.5em;
+  outline: none !important;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    box-shadow 0.15s,
+    border 0.15s,
+    transform 0.1s;
 }
 .ui-selectbutton .ui-button:last-child {
-	margin-right: 0;
+  margin-right: 0;
 }
-.ui-selectbutton .ui-button.ui-state-active, .ui-selectbutton .ui-button:focus {
-	background: var(--accent, #3a5ad7) !important;
-	color: #fff !important;
-	box-shadow: 0 2px 8px 0 rgba(58,90,215,0.10);
-	transform: scale(1.04);
-	z-index: 1;
+.ui-selectbutton .ui-button.ui-state-active,
+.ui-selectbutton .ui-button:focus {
+  background: var(--accent, #3a5ad7) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px 0 rgba(58, 90, 215, 0.1);
+  transform: scale(1.04);
+  z-index: 1;
 }
 .ui-selectbutton .ui-button:hover:not(.ui-state-active) {
-	background: #f0f2f7 !important;
-	color: var(--accent, #3a5ad7) !important;
+  background: #f0f2f7 !important;
+  color: var(--accent, #3a5ad7) !important;
 }
 
 /* Single day view toggle (checkbox) styling */
 .single-day-toggle {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5em;
-	margin-bottom: 1em;
-	font-size: 1.08em;
-	color: var(--primary, #23243a);
-	background: #f5f6fa;
-	border-radius: 8px;
-	padding: 0.4em 1em;
-	border: 1.5px solid var(--border, #e0e3ea);
-	cursor: pointer;
-	transition: background 0.15s, border 0.15s;
-	user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 1em;
+  font-size: 1.08em;
+  color: var(--primary, #23243a);
+  background: #f5f6fa;
+  border-radius: 8px;
+  padding: 0.4em 1em;
+  border: 1.5px solid var(--border, #e0e3ea);
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border 0.15s;
+  user-select: none;
 }
 .single-day-toggle input[type="checkbox"] {
-	accent-color: var(--accent, #3a5ad7);
-	width: 1.2em;
-	height: 1.2em;
-	margin: 0;
+  accent-color: var(--accent, #3a5ad7);
+  width: 1.2em;
+  height: 1.2em;
+  margin: 0;
 }
 .single-day-toggle:hover {
-	background: #e9ecf3;
-	border: 1.5px solid var(--accent, #3a5ad7);
+  background: #e9ecf3;
+  border: 1.5px solid var(--accent, #3a5ad7);
 }
