@@ -40,7 +40,11 @@ const DAY_ORDER: DayOfWeek[] = [
 export class TimetableComponent implements OnChanges, OnInit, OnDestroy {
   private ongoingNotifInterval: any;
   nextBreakMinutes: number | null = null;
+  nextBreakSeconds: number | null = null;
   nextBreakLabel: string | null = null;
+  endOfDayHours: number | null = null;
+  endOfDayMinutes: number | null = null;
+  endOfDaySeconds: number | null = null;
   @Input({ required: true }) groupId!: string;
 
   view: GroupViewByPeriods | null = null;
@@ -67,18 +71,20 @@ export class TimetableComponent implements OnChanges, OnInit, OnDestroy {
     // Schedule notifications for today's breaks
     this.scheduleBreakNotifications();
 
-    // start ticking every 30s to catch period boundaries and update break timer
+    // start ticking every 1s to update timers with seconds
     this.tickId = setInterval(() => {
       if (this.view) {
         this.computeNow(this.view);
         this.updateNextBreak();
+        this.updateEndOfDayTimer();
         this.cdr.markForCheck();
       }
-    }, 30_000);
+    }, 1_000);
     // Also update immediately
     setTimeout(() => {
       if (this.view) {
         this.updateNextBreak();
+        this.updateEndOfDayTimer();
         this.cdr.markForCheck();
       }
     }, 0);
@@ -148,23 +154,25 @@ export class TimetableComponent implements OnChanges, OnInit, OnDestroy {
     this.updateNextBreak();
     await this.scheduleBreakNotifications();
   }
-  /** Compute time (in minutes) until the next break, and label for next break */
+  /** Compute time (in minutes and seconds) until the next break, and label for next break */
   updateNextBreak() {
     if (!this.view || !this.nowDay) {
       this.nextBreakMinutes = null;
+      this.nextBreakSeconds = null;
       this.nextBreakLabel = null;
       return;
     }
-    const mins = this.nowMinutes();
+    const now = new Date();
+    const currentSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
     const todayRows = this.view.rows;
     let foundCurrent = false;
     let currentIdx = -1;
     // Find the current period index
     for (let i = 0; i < todayRows.length; ++i) {
       const row = todayRows[i];
-      const start = this.hhmmToMin(row.start);
-      const end = this.hhmmToMin(row.end);
-      if (mins >= start && mins < end) {
+      const start = this.hhmmToSeconds(row.start);
+      const end = this.hhmmToSeconds(row.end);
+      if (currentSeconds >= start && currentSeconds < end) {
         foundCurrent = true;
         currentIdx = i;
         break;
@@ -172,6 +180,7 @@ export class TimetableComponent implements OnChanges, OnInit, OnDestroy {
     }
     if (!foundCurrent) {
       this.nextBreakMinutes = null;
+      this.nextBreakSeconds = null;
       this.nextBreakLabel = null;
       return;
     }
@@ -185,18 +194,58 @@ export class TimetableComponent implements OnChanges, OnInit, OnDestroy {
       const isBreak =
         /^B\d+$/i.test(row.periodId) || /break|הפסקה/i.test(row.title);
       if (isBreak) {
-        nextBreakStart = this.hhmmToMin(row.start);
+        nextBreakStart = this.hhmmToSeconds(row.start);
         nextBreakLabel = row.title;
         break;
       }
     }
     if (nextBreakStart != null) {
-      this.nextBreakMinutes = nextBreakStart - mins;
+      const totalSeconds = nextBreakStart - currentSeconds;
+      this.nextBreakMinutes = Math.floor(totalSeconds / 60);
+      this.nextBreakSeconds = totalSeconds % 60;
       this.nextBreakLabel = nextBreakLabel;
     } else {
       this.nextBreakMinutes = null;
+      this.nextBreakSeconds = null;
       this.nextBreakLabel = null;
     }
+  }
+
+  /** Compute time until the end of the school day */
+  updateEndOfDayTimer() {
+    if (!this.view || !this.nowDay) {
+      this.endOfDayHours = null;
+      this.endOfDayMinutes = null;
+      this.endOfDaySeconds = null;
+      return;
+    }
+    const now = new Date();
+    const currentSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+    const todayRows = this.view.rows;
+
+    if (todayRows.length === 0) {
+      this.endOfDayHours = null;
+      this.endOfDayMinutes = null;
+      this.endOfDaySeconds = null;
+      return;
+    }
+
+    // Find the last period of the day
+    const lastPeriod = todayRows[todayRows.length - 1];
+    const endOfDaySeconds = this.hhmmToSeconds(lastPeriod.end);
+
+    if (currentSeconds >= endOfDaySeconds) {
+      // School day has ended
+      this.endOfDayHours = null;
+      this.endOfDayMinutes = null;
+      this.endOfDaySeconds = null;
+      return;
+    }
+
+    const totalSeconds = endOfDaySeconds - currentSeconds;
+    this.endOfDayHours = Math.floor(totalSeconds / 3600);
+    this.endOfDayMinutes = Math.floor((totalSeconds % 3600) / 60);
+    this.endOfDaySeconds = totalSeconds % 60;
   }
 
   ngOnDestroy(): void {
@@ -365,5 +414,10 @@ export class TimetableComponent implements OnChanges, OnInit, OnDestroy {
   private hhmmToMin(hhmm: string): number {
     const [h, m] = hhmm.split(':').map(Number);
     return h * 60 + m;
+  }
+
+  private hhmmToSeconds(hhmm: string): number {
+    const [h, m] = hhmm.split(':').map(Number);
+    return h * 3600 + m * 60;
   }
 }

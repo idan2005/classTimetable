@@ -1,9 +1,15 @@
 <div class="timetable-fullscreen">
   <div
-    *ngIf="nextBreakMinutes !== null && nextBreakMinutes > 0"
+    *ngIf="nextBreakMinutes !== null && nextBreakMinutes >= 0 && nextBreakSeconds !== null"
     class="next-break-timer"
   >
-    <span>הפסקה בעוד {{ nextBreakMinutes }} דקות ({{ nextBreakLabel }})</span>
+    <span>הפסקה בעוד {{ nextBreakMinutes }}:{{ nextBreakSeconds < 10 ? '0' + nextBreakSeconds : nextBreakSeconds }} ({{ nextBreakLabel }})</span>
+  </div>
+  <div
+    *ngIf="endOfDayHours !== null && endOfDayMinutes !== null && endOfDaySeconds !== null"
+    class="end-of-day-timer"
+  >
+    <span>סוף יום בעוד {{ endOfDayHours }}:{{ endOfDayMinutes < 10 ? '0' + endOfDayMinutes : endOfDayMinutes }}:{{ endOfDaySeconds < 10 ? '0' + endOfDaySeconds : endOfDaySeconds }}</span>
   </div>
   <div style="margin-bottom: 1em; text-align: right">
     <label class="single-day-toggle">
